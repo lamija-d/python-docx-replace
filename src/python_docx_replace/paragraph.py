@@ -2,6 +2,7 @@ from typing import Any, List
 
 from python_docx_replace.block_handler import BlockHandler
 from python_docx_replace.key_changer import KeyChanger
+from lxml import etree
 
 
 class Paragraph:
@@ -80,7 +81,7 @@ class Paragraph:
         # Make replacements in hyperlink texts
         for link in self.p._element.xpath(".//w:hyperlink"):
             try:
-                inner_run = link.xpath("w:r", namespaces=link.nsmap)[0]
+                inner_run = etree.ElementBase.xpath(link, "w:r", namespaces=link.nsmap)[0]
             except IndexError:
                 continue
             if key in inner_run.text:
